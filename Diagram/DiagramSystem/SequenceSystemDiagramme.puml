@@ -1,0 +1,29 @@
+@startuml
+actor user as U
+participant Frontend as F
+participant Backend as B
+participant ProcessUnit as P
+participant ModuleDb as M
+database Database as Db
+participant colector as C
+participant API as A
+
+
+C -> A
+A --> C
+C -> M
+M -> Db
+
+
+
+U -> F
+F -> B
+B -> P
+P -> M
+M -> Db
+Db --> M
+M --> P
+P --> B
+B --> F
+F --> U
+@enduml
