@@ -1,0 +1,42 @@
+@startuml
+package "API data" as api{
+    cloud API_Star as apistar
+    cloud API_SNCF as apisncf
+    cloud API_Navitia as apinavi
+}
+package Client{
+    package Frontend
+}
+package Server {
+    
+    package Backend{
+        package "API Back end"
+        database "BDD cache"
+        package Communication_DB 
+    }
+    package Process_and_Stockage_unit{
+        package API_Process_and_Stockage_unit
+        package Data_Adaptater
+        database "BDD" as bdd
+        package ParserJava
+        package Communication_DB 
+    }
+    package Collectors_unit{
+        package Collectors{
+            package StarCollector
+            package SNCFCollector
+            package NavitiaCollector
+        }
+        package APICollector
+    }
+}
+
+'lien'
+Server-->apistar
+Server-->apisncf
+Server-->apinavi
+Process_and_Stockage_unit-->Collectors_unit
+Backend-->Process_and_Stockage_unit
+Client --> Server
+
+@enduml
