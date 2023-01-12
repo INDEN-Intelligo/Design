@@ -2,28 +2,35 @@
 actor user as U
 participant Frontend as F
 participant Backend as B
-participant ProcessUnit as P
-participant ModuleDb as M
+participant ProcessAndStorageUnit as P
 database Database as Db
 participant colector as C
 participant API as A
+@enduml
 
 
-C -> A
-A --> C
-C -> M
-M -> Db
+@startuml DiagrammePullFixedSchedule
+participant ProcessAndStorageUnit as P
+database Database as Db
+participant colector as C
 
 
+P -> C : Request for a fixed schedule 
+C -> "API STAR" : send request
+"API STAR" --> C : fixed schedule
+C --> P : fixed schedule
+P -> Db : stock fixed schedule parsed
+@enduml
 
-U -> F
-F -> B
-B -> P
-P -> M
-M -> Db
-Db --> M
-M --> P
-P --> B
-B --> F
-F --> U
+
+@startuml DiagrammeGetDataFromCache
+participant Frontend as F
+participant Backend as B
+database Cache 
+
+
+F -> B : Request 
+B -> Cache : Request data from cache 
+Cache --> B : Data From cache
+B --> F : Data
 @enduml
