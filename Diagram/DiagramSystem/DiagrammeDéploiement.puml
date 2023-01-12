@@ -1,5 +1,53 @@
 @startuml
+actor user as U
+participant Frontend as F
+participant Backend as B
+participant ProcessUnit as P
+participant ModuleDb as M
+database Database as Db
+participant colector as C
+participant API as A
 
+
+C -> A
+A --> C
+C -> M
+M -> Db
+
+
+
+U -> F
+F -> B
+B -> P
+P -> M
+M -> Db
+Db --> M
+M --> P
+P --> B
+B --> F
+F --> U
+@enduml
+
+
+@startuml DiagrammePullFixedSchedule
+actor user as U
+participant Frontend as F
+participant Backend as B
+participant ProcessUnit as P
+participant ModuleDb as M
+database Database as Db
+participant colector as C
+
+P -> M : Request to update the fixed timetable of the data base 
+M -> C : Request for a fixed schedule 
+C -> "API STAR" : send request
+"API STAR" --> C : fixed schedule
+C --> M : fixed schedule
+M -> Db : stock fixed schedule parsed
+
+@enduml
+
+@startuml
 node "Display" <<Device>> as Display {
  component "Web Browser" as Browser {
  }
@@ -9,10 +57,7 @@ node "Display" <<Device>> as Display {
                 component Backend as NestJS {
                 }
 
-                component "Process Unit" as Upro{
-
-                }
-                component "Storage Unit" as Spro{
+                component "Process and Storage Unit" as SUpro{
 
                 }
                 database Database {
@@ -22,7 +67,7 @@ node "Display" <<Device>> as Display {
                 component Frontend {
                 }
 
-        
+
     }
 
 cloud "Api Keolis" <<API>> as keo{
@@ -35,10 +80,9 @@ cloud "Api Navitia.io" <<API>> as Nav{
 
 Frontend #-# Browser : HTTP
 
-Collecteurs #-# Spro
-Spro #--# Database
-Spro #-# Upro
-Upro #-# NestJS
+Collecteurs #-# SUpro
+SUpro #--# Database
+SUpro #-# NestJS
 NestJS #--# Frontend
 
 keo <-->  Collecteurs: HTTP
