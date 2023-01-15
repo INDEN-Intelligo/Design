@@ -15,7 +15,7 @@ node "Display" <<Device>> as Display {
 
                 database Database {
                 }
-                component Collecteurs {
+                component Collector {
                 }
                 component Frontend {
                 }
@@ -33,13 +33,13 @@ cloud "Api Navitia.io" <<API>> as Nav{
 
 Frontend #-# Browser : HTTP
 NestJS #-# Cache
-Collecteurs #-# SUpro
+Collector #-# SUpro
 SUpro #--# Database
 SUpro #-# NestJS
 NestJS #--# Frontend
 
-keo <-->  Collecteurs: HTTP
-SNCF <-->  Collecteurs: HTTP
-Nav  <--> Collecteurs : HTTP
+keo <-->  Collector: HTTP
+SNCF <-->  Collector: HTTP
+Nav  <--> Collector : HTTP
 
 @enduml
