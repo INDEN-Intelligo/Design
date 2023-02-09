@@ -12,7 +12,7 @@
 - API SCNF
 - API navita
 - Collecteur  
-- Unité central de controle et de stockage
+- Unité centrale de contrôle et de stockage
 - Back-end
 - Front-end 
 
