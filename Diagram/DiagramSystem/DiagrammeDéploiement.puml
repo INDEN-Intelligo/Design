@@ -1,0 +1,45 @@
+@startuml
+node "Display" <<Device>> as Display {
+ component "Web Browser" as Browser {
+ }
+}
+
+    node "App System" as Docker {
+                component Backend as NestJS {
+                }
+
+                component "Process and Storage Unit" as SUpro{
+                }
+                database Cache{
+                }
+
+                database Database {
+                }
+                component Collector {
+                }
+                component Frontend {
+                }
+
+
+    }
+
+cloud "Api Keolis" <<API>> as keo{
+}
+cloud "Api SNCF" <<API>> as SNCF{
+}
+cloud "Api Navitia.io" <<API>> as Nav{
+}
+
+
+Frontend #-# Browser : HTTP
+NestJS #-# Cache
+Collector #-# SUpro
+SUpro #--# Database
+SUpro #-# NestJS
+NestJS #--# Frontend
+
+keo <-->  Collector: HTTP
+SNCF <-->  Collector: HTTP
+Nav  <--> Collector : HTTP
+
+@enduml
